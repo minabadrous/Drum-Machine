@@ -4,23 +4,26 @@ import './App.css';
 class App extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      pressed : ''
+    }
     this.playAudio = this.playAudio.bind(this);
     this.handleKey = this.handleKey.bind(this);
   }
   playAudio(event){
     const ai = event.target.value;
     document.getElementById(ai).play();
+    this.setState({pressed: ai})
   }
   handleKey(event){
     if('qweasdzxcQWEASDZXC'.includes(event.key)){
-    document.getElementById(event.key.toUpperCase()).play();}
+    document.getElementById(event.key.toUpperCase()).play();
+    this.setState({pressed: event.key})
+  }
     
   }
   componentDidMount(){
     document.addEventListener("keydown", this.handleKey, false);
-  }
-  componentWillUnmount(){
-    document.removeEventListener("keydown", this.handleKey, false);
   }
   render(){
   return (
@@ -63,6 +66,7 @@ class App extends React.Component {
             <audio className="clip" id="C" src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3">
             </audio>
           </button>
+          <p id="pressed">{this.state.pressed}</p>
         </div>
       </div>
     </div>
